@@ -56,4 +56,7 @@ dependencies {
 
     //merge FFmpeg
     implementation ("com.arthenica:mobile-ffmpeg-full:4.4")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }

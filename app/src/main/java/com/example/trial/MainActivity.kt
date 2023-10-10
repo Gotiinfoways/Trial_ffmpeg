@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,12 +13,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.MediaController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.CallBackOfQuery
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.FFmpegCallBack
 import com.example.trial.merge_file.FFmpegQueryExtension
@@ -25,6 +28,7 @@ import com.easynewsvideomaker.easynewsvideomaker.merge_file.LogMessage
 import com.example.trial.databinding.ActivityMainBinding
 import com.example.trial.databinding.DialogFileSaveBinding
 import com.example.trial.databinding.ProgressBarBinding
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -35,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private val PICK_VIDEO_REQUEST = 1
     private var selectedVideoUri: Uri? = null
+    var gifPath=""
     lateinit var ffmpegQueryExtension: FFmpegQueryExtension
     var height: Int? = 0
     var width: Int? = 0
@@ -66,6 +71,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+
+
+
+        // Load the GIF image from resources
+        val gifResourceId = R.raw.tenor // Replace with the actual resource ID
+        val gifBitmap = BitmapFactory.decodeResource(resources, gifResourceId)
+
+//        mainBinding.imgNewsLoge.setImageBitmap(gifBitmap)
+        // Convert the GIF image to a Base64 string
+        val base64String = convertBitmapToBase64(gifBitmap)
+
+        gifPath=base64String
+        Log.e("TAG", "ddsddd: $base64String", )
+        Log.e("TAG", "initView: $gifPath", )
+
+        Glide.with(this)
+            .load(base64String)
+            .into(mainBinding.imgNewsLoge);
 
         mainBinding.linImportVideo.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
@@ -104,7 +127,8 @@ class MainActivity : AppCompatActivity() {
 
 //                addImageOnVideo(fileName)
 //                mixVideo(fileName)
-                addTextOnVideoFun(fileName)
+                addGifOnVideoFun(fileName)
+//                addTextOnVideoFun(fileName)
                 dialog.dismiss()
             }
 
@@ -124,7 +148,15 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+    private fun convertBitmapToBase64(bitmap: Bitmap): String {
+        // Convert Bitmap to byte array
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
 
+        // Convert byte array to Base64 string
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
 
     fun saveFrameLayoutAsImage() {
         // Create a transparent Bitmap
@@ -275,6 +307,57 @@ class MainActivity : AppCompatActivity() {
         val query = ffmpegQueryExtension.addTextOnVideo(
             tvInputPathVideo,
             tvInputPathImage,
+            textPath,
+            outputPathBrakingNews1
+        )
+        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
+            override fun process(logMessage: LogMessage) {
+
+            }
+
+            override fun success() {
+
+                progressDialog.dismiss()
+                Toast.makeText(this@MainActivity, "Video Download Success", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun cancel() {
+
+                progressDialog.dismiss()
+                Toast.makeText(this@MainActivity, "Video Download Cancel", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun failed() {
+
+                progressDialog.dismiss()
+                Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun addGifOnVideoFun(fileName: String) {
+
+
+        outputPathBrakingNews1 =
+            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
+
+        var tvInputPathVideo = videoPath!!
+
+
+        var tvGifPath = gifPath
+
+
+        // Get the location of the TextView on the screen
+        val locationOnScreen = IntArray(2)
+        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
+        //Get the x and y coordinates
+
+
+        val query = ffmpegQueryExtension.addGifOnVideo(
+            tvInputPathVideo,
+            tvGifPath,
             textPath,
             outputPathBrakingNews1
         )
