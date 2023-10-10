@@ -318,7 +318,7 @@ class FFmpegQueryExtension {
 //    }
 
 
-    //three text scroll bottom and set padding vertical and set text scroll position  with image add on video
+    //three text scroll bottom and set padding vertical and set text scroll position  and text scroll speed with image add on video
 //    fun addTextOnVideo(
 //        inputVideo: String, imageInput: String, textInput: String, output: String
 //    ): Array<String> {
@@ -346,63 +346,36 @@ class FFmpegQueryExtension {
 //        return inputs.toArray(arrayOfNulls(inputs.size))
 //    }
 
+    //three text scroll,text scroll speed,image  size set on video and video size  youtube size
     fun addTextOnVideo(
-        inputVideo: String,
-        imageInput: String,
-        textInput: String,
-        output: String
+        inputVideo: String, imageInput: String, textInput: String, output: String
     ): Array<String> {
         val inputs: ArrayList<String> = ArrayList()
         val fontPath = "/system/fonts/DroidSans.ttf"
-
+        var textInput2 = "sanjay dangar"
+        var textInput3 = "Goti Infoways is best company"
+        var textCenter  =
+            "drawtext=fontfile='$fontPath':text='$textInput2':fontsize=20:fontcolor=white:x=w-(t-4.5)*100/2:y=h-th-60"
+        val textBottom =
+            "drawtext=fontfile='$fontPath':text='$textInput':fontsize=20:fontcolor=black:x=w-(t-4.5)*100/2:y=h-th-20"
         inputs.apply {
             add("-i")
             add(inputVideo)
             add("-i")
             add(imageInput)
             add("-filter_complex")
-            add("[1][0]scale2ref[i][m];[m][i]overlay[v],drawtext=text='$textInput':fontfile='$fontPath':fontsize=24:fontcolor=white")
-            add("-map")
-            add("[v]")
-            add("-ac")
-            add("2")
+            add("[1:v]scale=650:450 [ovrl],[0:v][ovrl]overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2,$textBottom,$textCenter")
+            add("-s")
+            add("1920x1080")
             add("-c:a")
             add("copy")
+            add("-movflags")
+            add("+faststart")
             add(output)
         }
 
         return inputs.toArray(arrayOfNulls(inputs.size))
     }
-//    fun addTextOnVideo(
-//        inputVideo: String, imageInput: String, textInput: String, output: String
-//    ): Array<String> {
-//        val inputs: ArrayList<String> = ArrayList()
-//        val fontPath = "/system/fonts/DroidSans.ttf"
-//        var textInput2 = "sanjay dangar"
-//        var textInput3 = "Goti Infoways is best company "
-//
-//        inputs.apply {
-//            add("-i")
-//            add(inputVideo)
-//            add("-i")
-//            add(imageInput)
-//            add("-filter_complex")
-//            add("[1][0]scale2ref[i][m];[m][i]overlay[v],drawtext=fontfile=/system/fonts/DroidSans.ttf:text='$textInput':fontsize=20:fontcolor=white:x=w-(t-4.5)*(w+tw)/2:y=h-th-10,drawtext=fontfile=/system/fonts/DroidSans.ttf:text='$textInput':fontsize=20:fontcolor=white:x=w-(t-4.5)*(w+tw)/2:y=h-th-30,drawtext=fontfile=/system/fonts/DroidSans.ttf:text='$textInput':fontsize=20:fontcolor=white:x=w-(t-4.5)*(w+tw)/2:y=h-th-50")
-//            add("-map")
-//            add("[v]")
-//            add("-map")
-//            add("0:a?")
-//            add("-ac")
-//            add("2")
-//            add("-c:a")
-//            add("copy")
-//            add("-preset")
-//            add("ultrafast")
-//            add(output)
-//        }
-//
-//        return inputs.toArray(arrayOfNulls(inputs.size))
-//    }
 
     fun addVideoWaterMark(
         inputVideo: String, imageInput: String, posX: Float?, posY: Float?, output: String
