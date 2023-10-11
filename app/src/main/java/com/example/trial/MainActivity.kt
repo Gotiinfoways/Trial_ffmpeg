@@ -5,10 +5,10 @@ import android.app.Dialog
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -20,14 +20,13 @@ import android.widget.LinearLayout
 import android.widget.MediaController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.CallBackOfQuery
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.FFmpegCallBack
-import com.example.trial.merge_file.FFmpegQueryExtension
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.LogMessage
 import com.example.trial.databinding.ActivityMainBinding
 import com.example.trial.databinding.DialogFileSaveBinding
 import com.example.trial.databinding.ProgressBarBinding
+import com.example.trial.merge_file.FFmpegQueryExtension
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     private val PICK_VIDEO_REQUEST = 1
     private var selectedVideoUri: Uri? = null
-    var gifPath=""
+    var gifPath = ""
     lateinit var ffmpegQueryExtension: FFmpegQueryExtension
     var height: Int? = 0
     var width: Int? = 0
@@ -73,22 +72,21 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
 
 
-
-        // Load the GIF image from resources
-        val gifResourceId = R.raw.tenor // Replace with the actual resource ID
-        val gifBitmap = BitmapFactory.decodeResource(resources, gifResourceId)
-
-//        mainBinding.imgNewsLoge.setImageBitmap(gifBitmap)
-        // Convert the GIF image to a Base64 string
-        val base64String = convertBitmapToBase64(gifBitmap)
-
-        gifPath=base64String
-        Log.e("TAG", "ddsddd: $base64String", )
-        Log.e("TAG", "initView: $gifPath", )
-
-        Glide.with(this)
-            .load(base64String)
-            .into(mainBinding.imgNewsLoge);
+//        // Load the GIF image from resources
+//        val gifResourceId = R.raw.tenor // Replace with the actual resource ID
+//        val gifBitmap = BitmapFactory.decodeResource(resources, gifResourceId)
+//
+////        mainBinding.imgNewsLoge.setImageBitmap(gifBitmap)
+//        // Convert the GIF image to a Base64 string
+//        val base64String = convertBitmapToBase64(gifBitmap)
+//
+//        gifPath=base64String
+//        Log.e("TAG", "ddsddd: $base64String", )
+//        Log.e("TAG", "initView: $gifPath", )
+//
+//        Glide.with(this)
+//            .load(base64String)
+//            .into(mainBinding.imgNewsLoge);
 
         mainBinding.linImportVideo.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
@@ -127,8 +125,8 @@ class MainActivity : AppCompatActivity() {
 
 //                addImageOnVideo(fileName)
 //                mixVideo(fileName)
-                addGifOnVideoFun(fileName)
-//                addTextOnVideoFun(fileName)
+//                addGifOnVideoFun(fileName)
+                addTextOnVideoFun(fileName)
                 dialog.dismiss()
             }
 
@@ -148,6 +146,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
     private fun convertBitmapToBase64(bitmap: Bitmap): String {
         // Convert Bitmap to byte array
         val byteArrayOutputStream = ByteArrayOutputStream()
@@ -289,7 +288,7 @@ class MainActivity : AppCompatActivity() {
     private fun addTextOnVideoFun(fileName: String) {
 
 
-        outputPathBrakingNews1 =
+        var outputPath =
             Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
 
         var tvInputPathVideo = videoPath!!
@@ -297,18 +296,38 @@ class MainActivity : AppCompatActivity() {
 
         var tvInputPathImage = imagePathTxtBraking1!!
 
+//        var textInputeRepoter = mainBinding.txtLayRepoterName.text.toString()
+
+//
+//        val location = IntArray(2)
+//        mainBinding.txtLayRepoterName.getLocationOnScreen(location)
+//        val RepoterOnScreenX = location[0].toFloat()
+//        val RepoterOnScreenY = location[1].toFloat()
+
+//        var RepoterOnScreenX = mainBinding.txtLayRepoterName.left.toFloat()
+//        var RepoterOnScreenY = mainBinding.txtLayRepoterName.top.toFloat()
+
+        var textInputeCenter = mainBinding.txtLay2.text.toString()
+        var textInputeBottom = mainBinding.txtLay3.text.toString()
 
         // Get the location of the TextView on the screen
-        val locationOnScreen = IntArray(2)
-        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
+//        val locationOnScreen = IntArray(2)
+//        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
         //Get the x and y coordinates
 
+// Get the video's width and height
+        // Get the video's width and height
+        val videoWidth = getVideoWidth(tvInputPathVideo)
+        val videoHeight = getVideoHeight(tvInputPathVideo)
 
         val query = ffmpegQueryExtension.addTextOnVideo(
             tvInputPathVideo,
             tvInputPathImage,
-            textPath,
-            outputPathBrakingNews1
+            textInputeCenter,
+            textInputeBottom,
+            videoWidth,
+            videoHeight,
+            outputPath
         )
         CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
             override fun process(logMessage: LogMessage) {
@@ -335,6 +354,22 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    // Function to get the video's width
+    private fun getVideoWidth(videoPath: String): Int {
+        val retriever = MediaMetadataRetriever()
+        retriever.setDataSource(videoPath)
+        val width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
+        return width?.toInt() ?: 0 // Error handling
+    }
+
+    // Function to get the video's height
+    private fun getVideoHeight(videoPath: String): Int {
+        val retriever = MediaMetadataRetriever()
+        retriever.setDataSource(videoPath)
+        val height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
+        return height?.toInt() ?: 0 // Error handling
     }
 
     private fun addGifOnVideoFun(fileName: String) {

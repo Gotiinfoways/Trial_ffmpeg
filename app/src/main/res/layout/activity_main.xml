@@ -129,20 +129,16 @@
                     android:layout_height="@dimen/_15sdp"
                     android:layout_above="@id/linLayer2"
                     android:background="#031DA8"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/_5sdp">
 
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/txtLay1"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:ellipsize="marquee"-->
-                    <!--                        android:marqueeRepeatLimit="marquee_forever"-->
-                    <!--                        android:scrollHorizontally="true"-->
-                    <!--                        android:singleLine="true"-->
-                    <!--                        android:text="Hello guys !! Welcome to Easy News  Maker App Create Your News"-->
-                    <!--                        android:textColor="@color/white" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_85sdp"
+                        android:text="Repoter Name :-"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
 
@@ -303,15 +299,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtLay1"
+            android:id="@+id/txtLayRepoterName"
             android:layout_width="@dimen/_145sdp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_80sdp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:text="Hello guys !! Welcome to Easy News  Maker App Create Your News"
+            android:layout_marginHorizontal="@dimen/_170sdp"
+            android:text="Sanjay Dangar"
             android:textColor="@color/white" />
 
         <TextView
