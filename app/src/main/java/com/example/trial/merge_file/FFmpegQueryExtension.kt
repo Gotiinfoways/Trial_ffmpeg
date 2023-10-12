@@ -347,6 +347,84 @@ class FFmpegQueryExtension {
 //    }
 
     //two text scroll,text scroll speed,image  size set on video and video size  youtube size
+//    fun addTextOnVideo(
+//        tvInputPathVideo: String,
+//        tvInputPathImage: String,
+//        textInputeCenter: String,
+//        textInputeBottom: String,
+//        videoWidth: Int,
+//        videoHeight: Int,
+//        outputPath: String
+//    ): Array<String> {
+//        val inputs: ArrayList<String> = ArrayList()
+//        val fontPath = "/system/fonts/DroidSans.ttf"
+//
+////        var textRepoterName = "drawtext=fontfile='$fontPath':text='$textInputeRepoter':fontsize=20:fontcolor=white:x=210:y=h-th-120"
+////        var textRepoterName = "drawtext=fontfile='$fontPath':text='$textInputeRepoter':fontsize=20:fontcolor=black:x=$RepoterOnScreenX:y=$RepoterOnScreenY"
+//        var textCenter = "drawtext=fontfile='$fontPath':text='$textInputeCenter':fontsize=20:fontcolor=white:x=w-(t-4.5)*100/2:y=h-th-60"
+//        val textBottom =
+//            "drawtext=fontfile='$fontPath':text='$textInputeBottom':fontsize=20:fontcolor=black:x=w-(t-4.5)*100/2:y=h-th-25"
+//
+//
+//
+//        inputs.apply {
+//            add("-i")
+//            add(tvInputPathVideo)
+//            add("-i")
+//            add(tvInputPathImage)
+//            add("-filter_complex")
+//            add("[1:v]scale=$videoWidth:$videoHeight[scaled_image];[0:v][scaled_image]overlay=0:0, $textCenter, $textBottom")
+//            add("-c:a")
+//            add("copy")
+//            add("-s")
+//            add("1920x1080")
+//            add("-movflags")
+//            add("+faststart")
+//            add(outputPath)
+//        }
+//
+//        return inputs.toArray(arrayOfNulls(inputs.size))
+//    }
+
+    //looping of left to right  scrolling text
+//    fun addTextOnVideo(
+//        tvInputPathVideo: String,
+//        tvInputPathImage: String,
+//        textInputeCenter: String,
+//        textInputeBottom: String,
+//        videoWidth: Int,
+//        videoHeight: Int,
+//        outputPath: String
+//    ): Array<String> {
+//        val inputs: ArrayList<String> = ArrayList()
+//        val fontPath = "/system/fonts/DroidSans.ttf"
+//
+//
+//        var textCenter = "drawtext=fontfile='$fontPath':text='$textInputeCenter':fontsize=20:fontcolor=white:x=(mod(5*n\\,w+tw)-tw):y=h-th-60"
+//        val textBottom = "drawtext=fontfile='$fontPath':text='$textInputeBottom':fontsize=20:fontcolor=black:x=(mod(5*n\\,w+tw)-tw):y=h-th-25"
+//
+//
+//
+//        inputs.apply {
+//            add("-i")
+//            add(tvInputPathVideo)
+//            add("-i")
+//            add(tvInputPathImage)
+//            add("-filter_complex")
+//            add("[1:v]scale=$videoWidth:$videoHeight[scaled_image];[0:v][scaled_image]overlay=0:0, $textCenter, $textBottom")
+//            add("-c:a")
+//            add("copy")
+//            add("-s")
+//            add("1920x1080")
+//            add("-movflags")
+//            add("+faststart")
+//            add(outputPath)
+//        }
+//
+//        return inputs.toArray(arrayOfNulls(inputs.size))
+//    }
+
+   // looping of right  to left  scrolling text
     fun addTextOnVideo(
         tvInputPathVideo: String,
         tvInputPathImage: String,
@@ -359,11 +437,9 @@ class FFmpegQueryExtension {
         val inputs: ArrayList<String> = ArrayList()
         val fontPath = "/system/fonts/DroidSans.ttf"
 
-//        var textRepoterName = "drawtext=fontfile='$fontPath':text='$textInputeRepoter':fontsize=20:fontcolor=white:x=210:y=h-th-120"
-//        var textRepoterName = "drawtext=fontfile='$fontPath':text='$textInputeRepoter':fontsize=20:fontcolor=black:x=$RepoterOnScreenX:y=$RepoterOnScreenY"
-        var textCenter = "drawtext=fontfile='$fontPath':text='$textInputeCenter':fontsize=20:fontcolor=white:x=w-(t-4.5)*100/2:y=h-th-60"
-        val textBottom =
-            "drawtext=fontfile='$fontPath':text='$textInputeBottom':fontsize=20:fontcolor=black:x=w-(t-4.5)*100/2:y=h-th-25"
+
+        var textCenter = "drawtext=fontfile='$fontPath':text='$textInputeCenter':fontsize=20:fontcolor=white:x=w-(mod(5*n\\,w+tw)):y=h-th-60"
+        val textBottom = "drawtext=fontfile='$fontPath':text='$textInputeBottom':fontsize=20:fontcolor=black:x=w-(mod(5*n\\,w+tw)):y=h-th-25"
 
 
 
