@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Insta_1_Activity"
+    android:background="@color/lightblack"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/frameView"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_510sdp"
+        android:layout_centerHorizontal="true">
+
+        <VideoView
+            android:id="@+id/vidView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:visibility="visible"/>
+
+        <RelativeLayout
+            android:id="@+id/loutLogo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logo1"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/logotext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="News Channel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+
+
+        <ImageView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:src="@drawable/rec" />
+
+        <LinearLayout
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/_100sdp"
+            android:background="@drawable/p11"
+            android:backgroundTint="@color/Red"
+            android:gravity="center|end">
+
+            <TextView
+                android:id="@+id/txtBreakingNrwsReel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:text="BREAKING\n NEWS"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loutbg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:background="@color/lightbred"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp">
+
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/imggif"-->
+            <!--                android:layout_width="@dimen/_100sdp"-->
+            <!--                android:layout_height="@dimen/_100sdp"-->
+            <!--                android:background="#fff"-->
+            <!--                android:src="@drawable/gif" />-->
+
+            <TextView
+                android:id="@+id/txtAdditionalTextReel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Additional Text Here"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdExploreBtnReel1"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_110sdp"
+        android:layout_marginBottom="17dp"
+        android:backgroundTint="@color/Red"
+        app:cardCornerRadius="@dimen/_35sdp"
+        app:cardElevation="@dimen/_2sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Explore"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

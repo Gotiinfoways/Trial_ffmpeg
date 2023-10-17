@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 //                addImageOnVideo(fileName)
 //                mixVideo(fileName)
 //                addGifOnVideoFun(fileName)
-                addTextOnVideoFun(fileName)
+//                addTextOnVideoFun(fileName)
                 dialog.dismiss()
             }
 
@@ -199,10 +199,10 @@ class MainActivity : AppCompatActivity() {
 
 
                     // Start playing the video
-                    mainBinding.vidView.visibility = View.VISIBLE
-                    mainBinding.linVideoZoom.visibility = View.VISIBLE
-                    mainBinding.linBtn.visibility = View.VISIBLE
-                    mainBinding.imgView.visibility = View.INVISIBLE
+//                    mainBinding.vidView.visibility = View.VISIBLE
+//                    mainBinding.linVideoZoom.visibility = View.VISIBLE
+//                    mainBinding.linBtn.visibility = View.VISIBLE
+//                    mainBinding.imgView.visibility = View.INVISIBLE
                     mainBinding.vidView.start()
 
 //                    videoPath=selectedVideoUri.path
@@ -234,192 +234,192 @@ class MainActivity : AppCompatActivity() {
     }
 
     var outputPathBrakingNews1: String = ""
-    private fun addImageOnVideo(fileName: String) {
-
-
-        outputPathBrakingNews1 =
-            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
-
-        var tvInputPathVideo = videoPath!!
-
-
-        var tvInputPathImage = imagePathTxtBraking1!!
-
-
-        // Get the location of the TextView on the screen
-        val locationOnScreen = IntArray(2)
-        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
-        //Get the x and y coordinates
-
-
-        val query = ffmpegQueryExtension.addImageOnVideo(
-            tvInputPathVideo,
-            tvInputPathImage,
-
-            outputPathBrakingNews1
-        )
-        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
-            override fun process(logMessage: LogMessage) {
-
-            }
-
-            override fun success() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Success", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun cancel() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Cancel", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun failed() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun addTextOnVideoFun(fileName: String) {
-
-
-        var outputPath =
-            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
-
-        var tvInputPathVideo = videoPath!!
-
-
-        var tvInputPathImage = imagePathTxtBraking1!!
-
-//        var textInputeRepoter = mainBinding.txtLayRepoterName.text.toString()
-
+//    private fun addImageOnVideo(fileName: String) {
 //
-//        val location = IntArray(2)
-//        mainBinding.txtLayRepoterName.getLocationOnScreen(location)
-//        val RepoterOnScreenX = location[0].toFloat()
-//        val RepoterOnScreenY = location[1].toFloat()
-
-//        var RepoterOnScreenX = mainBinding.txtLayRepoterName.left.toFloat()
-//        var RepoterOnScreenY = mainBinding.txtLayRepoterName.top.toFloat()
-
-        var textInputeCenter = mainBinding.txtLay2.text.toString()
-        var textInputeBottom = mainBinding.txtLay3.text.toString()
-
-        // Get the location of the TextView on the screen
+//
+//        outputPathBrakingNews1 =
+//            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
+//
+//        var tvInputPathVideo = videoPath!!
+//
+//
+//        var tvInputPathImage = imagePathTxtBraking1!!
+//
+//
+//        // Get the location of the TextView on the screen
+//        val locationOnScreen = IntArray(2)
+////        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
+//        //Get the x and y coordinates
+//
+//
+//        val query = ffmpegQueryExtension.addImageOnVideo(
+//            tvInputPathVideo,
+//            tvInputPathImage,
+//
+//            outputPathBrakingNews1
+//        )
+//        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
+//            override fun process(logMessage: LogMessage) {
+//
+//            }
+//
+//            override fun success() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Success", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//
+//            override fun cancel() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Cancel", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//
+//            override fun failed() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
+//
+//    private fun addTextOnVideoFun(fileName: String) {
+//
+//
+//        var outputPath =
+//            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
+//
+//        var tvInputPathVideo = videoPath!!
+//
+//
+//        var tvInputPathImage = imagePathTxtBraking1!!
+//
+////        var textInputeRepoter = mainBinding.txtLayRepoterName.text.toString()
+//
+////
+////        val location = IntArray(2)
+////        mainBinding.txtLayRepoterName.getLocationOnScreen(location)
+////        val RepoterOnScreenX = location[0].toFloat()
+////        val RepoterOnScreenY = location[1].toFloat()
+//
+////        var RepoterOnScreenX = mainBinding.txtLayRepoterName.left.toFloat()
+////        var RepoterOnScreenY = mainBinding.txtLayRepoterName.top.toFloat()
+//
+////        var textInputeCenter = mainBinding.txtLay2.text.toString()
+////        var textInputeBottom = mainBinding.txtLay3.text.toString()
+//
+//        // Get the location of the TextView on the screen
+////        val locationOnScreen = IntArray(2)
+////        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
+//        //Get the x and y coordinates
+//
+//// Get the video's width and height
+//        // Get the video's width and height
+//        val videoWidth = getVideoWidth(tvInputPathVideo)
+//        val videoHeight = getVideoHeight(tvInputPathVideo)
+//
+//        val query = ffmpegQueryExtension.addTextOnVideo(
+//            tvInputPathVideo,
+//            tvInputPathImage,
+//            textInputeCenter,
+//            textInputeBottom,
+//            videoWidth,
+//            videoHeight,
+//            outputPath
+//        )
+//        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
+//            override fun process(logMessage: LogMessage) {
+//
+//            }
+//
+//            override fun success() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Success", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//
+//            override fun cancel() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Cancel", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//
+//            override fun failed() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
+//
+//    // Function to get the video's width
+//    private fun getVideoWidth(videoPath: String): Int {
+//        val retriever = MediaMetadataRetriever()
+//        retriever.setDataSource(videoPath)
+//        val width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
+//        return width?.toInt() ?: 0 // Error handling
+//    }
+//
+//    // Function to get the video's height
+//    private fun getVideoHeight(videoPath: String): Int {
+//        val retriever = MediaMetadataRetriever()
+//        retriever.setDataSource(videoPath)
+//        val height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
+//        return height?.toInt() ?: 0 // Error handling
+//    }
+//
+//    private fun addGifOnVideoFun(fileName: String) {
+//
+//
+//        outputPathBrakingNews1 =
+//            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
+//
+//        var tvInputPathVideo = videoPath!!
+//
+//
+//        var tvGifPath = gifPath
+//
+//
+//        // Get the location of the TextView on the screen
 //        val locationOnScreen = IntArray(2)
 //        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
-        //Get the x and y coordinates
-
-// Get the video's width and height
-        // Get the video's width and height
-        val videoWidth = getVideoWidth(tvInputPathVideo)
-        val videoHeight = getVideoHeight(tvInputPathVideo)
-
-        val query = ffmpegQueryExtension.addTextOnVideo(
-            tvInputPathVideo,
-            tvInputPathImage,
-            textInputeCenter,
-            textInputeBottom,
-            videoWidth,
-            videoHeight,
-            outputPath
-        )
-        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
-            override fun process(logMessage: LogMessage) {
-
-            }
-
-            override fun success() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Success", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun cancel() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Cancel", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun failed() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    // Function to get the video's width
-    private fun getVideoWidth(videoPath: String): Int {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(videoPath)
-        val width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
-        return width?.toInt() ?: 0 // Error handling
-    }
-
-    // Function to get the video's height
-    private fun getVideoHeight(videoPath: String): Int {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(videoPath)
-        val height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
-        return height?.toInt() ?: 0 // Error handling
-    }
-
-    private fun addGifOnVideoFun(fileName: String) {
-
-
-        outputPathBrakingNews1 =
-            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
-
-        var tvInputPathVideo = videoPath!!
-
-
-        var tvGifPath = gifPath
-
-
-        // Get the location of the TextView on the screen
-        val locationOnScreen = IntArray(2)
-        mainBinding.linBreakingNews.getLocationOnScreen(locationOnScreen)
-        //Get the x and y coordinates
-
-
-        val query = ffmpegQueryExtension.addGifOnVideo(
-            tvInputPathVideo,
-            tvGifPath,
-            textPath,
-            outputPathBrakingNews1
-        )
-        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
-            override fun process(logMessage: LogMessage) {
-
-            }
-
-            override fun success() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Success", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun cancel() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Cancel", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun failed() {
-
-                progressDialog.dismiss()
-                Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
+//        //Get the x and y coordinates
+//
+//
+//        val query = ffmpegQueryExtension.addGifOnVideo(
+//            tvInputPathVideo,
+//            tvGifPath,
+//            textPath,
+//            outputPathBrakingNews1
+//        )
+//        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
+//            override fun process(logMessage: LogMessage) {
+//
+//            }
+//
+//            override fun success() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Success", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//
+//            override fun cancel() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Cancel", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//
+//            override fun failed() {
+//
+//                progressDialog.dismiss()
+//                Toast.makeText(this@MainActivity, "Video Download Fail", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
 }
