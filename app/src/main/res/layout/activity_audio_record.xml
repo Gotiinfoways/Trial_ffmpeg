@@ -1,37 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".AudioRecordActivity">
-
-    <TextView
-        android:id="@+id/recordingDurationTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recording Duration: 0 seconds"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp" />
 
     <Button
         android:id="@+id/recordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Record"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/recordingDurationTextView"
-        android:layout_marginTop="16dp" />
+        android:text="Record Audio" />
 
     <Button
-        android:id="@+id/stopButton"
+        android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/recordButton"
-        android:layout_marginTop="16dp" />
+        android:layout_centerHorizontal="true"
+        android:text="Play Audio" />
 
-</RelativeLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/playButton"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/durationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekBar"
+            android:layout_centerHorizontal="true"
+            android:text="Duration: 0:00"
+            android:layout_marginTop="16dp"/>
+    </RelativeLayout>
+

@@ -1,120 +1,207 @@
 package com.example.trial
 
 import android.Manifest
-import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
+import android.os.Looper
 import android.widget.Button
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.trial.databinding.ActivityAudioRecordBinding
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 class AudioRecordActivity : AppCompatActivity() {
 
-    lateinit var  audioRecordBinding: ActivityAudioRecordBinding
-    private val STORAGE_PERMISSION_CODE = 1
-
-    private var mediaRecorder: MediaRecorder? = null
-    private val handler = Handler()
+    lateinit var audioRecordBinding: ActivityAudioRecordBinding
+    private var recorder: MediaRecorder? = null
+    private var mediaPlayer: MediaPlayer? = null
+    private var isRecording = false
     private var recordingStartTime: Long = 0
 
-    private lateinit var recordingDurationTextView: TextView
+//    private val handler = Handler()
+
+    //    private lateinit var mediaPlayer: MediaPlayer
+//    var playButton: Button? = null
+//    var seekBar: SeekBar? = null
+//    var durationText: TextView? = null
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        audioRecordBinding= ActivityAudioRecordBinding.inflate(layoutInflater)
+        audioRecordBinding = ActivityAudioRecordBinding.inflate(layoutInflater)
         setContentView(audioRecordBinding.root)
 
-        recordingDurationTextView = findViewById(R.id.recordingDurationTextView)
 
-        val recordButton = findViewById<Button>(R.id.recordButton)
-        val stopButton = findViewById<Button>(R.id.stopButton)
+//        playButton = findViewById(R.id.playButton)
+//        seekBar = findViewById(R.id.seekBar)
+//        durationText = findViewById(R.id.durationText)
+        // Request necessary permissions
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ),
+            1
+        )
 
-        recordButton.setOnClickListener {
-            if (checkPermission()) {
+//        val recordButton = findViewById<Button>(R.id.recordButton)
+//        playButton = findViewById<Button>(R.id.playButton)
+
+        audioRecordBinding.recordButton.setOnClickListener {
+            if (!isRecording) {
                 startRecording()
+                audioRecordBinding.recordButton.text = "Stop Recording"
             } else {
-                requestStoragePermission()
+                stopRecording()
+                audioRecordBinding.recordButton.text = "Record Audio"
+            }
+            isRecording = !isRecording
+        }
+
+        audioRecordBinding.playButton!!.setOnClickListener {
+            if (!isRecording) {
+                startPlaying()
+////                updateSeekBar()
+//                playButton.text = "Stop"
             }
         }
 
-        stopButton.setOnClickListener {
-            stopRecording()
-        }
     }
 
     private fun startRecording() {
-        mediaRecorder = MediaRecorder()
-        val audioFilePath = Environment.getExternalStorageDirectory().absolutePath + "/my_audio.3gp"
-
-        mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
-        mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-        mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-        mediaRecorder?.setOutputFile(audioFilePath)
-
+        recorder = MediaRecorder()
+        recorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
+        recorder?.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+        recorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+        val filePath = "${Environment.getExternalStorageDirectory()}/audio_record.3gp"
+        recorder?.setOutputFile(filePath)
 
         try {
-            mediaRecorder?.prepare()
-            mediaRecorder?.start()
-            recordingStartTime = System.currentTimeMillis()
-
-            // Start a runnable to update the recording duration
-            handler.postDelayed(updateDuration, 1000)
+            recorder?.prepare()
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+        recorder?.start()
+
+        recordingStartTime = System.currentTimeMillis()
+
+        handler.post(updateDuration)
     }
 
     private fun stopRecording() {
-        mediaRecorder?.stop()
-        mediaRecorder?.reset()
-        mediaRecorder?.release()
-        mediaRecorder = null
+        recorder?.stop()
+        recorder?.release()
+        recorder = null
         handler.removeCallbacks(updateDuration)
+    }
+
+    private fun startPlaying() {
+        mediaPlayer = MediaPlayer()
+        val filePath = "${Environment.getExternalStorageDirectory()}/audio_record.3gp"
+
+        try {
+            mediaPlayer?.setDataSource(filePath)
+            mediaPlayer?.prepare()
+            mediaPlayer?.start()
+
+            updateSeekBar()
+            audioRecordBinding.playButton!!.text = "Stop Audio"
+
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        mediaPlayer?.setOnCompletionListener {
+            stopPlaying()
+            audioRecordBinding.playButton!!.text = "Play Audio"
+        }
+
+
+        audioRecordBinding.seekBar!!.max = mediaPlayer!!.duration
+
+//        mediaPlayer.setOnCompletionListener {
+//            playButton.text = "Play"
+//        }
+
+        audioRecordBinding.seekBar!!.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    mediaPlayer!!.seekTo(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+    }
+
+    private fun stopPlaying() {
+        mediaPlayer?.release()
+//        mediaPlayer!!.pause()
+        mediaPlayer = null
     }
 
     private val updateDuration = object : Runnable {
         override fun run() {
+            val durationText = findViewById<TextView>(R.id.durationText)
             val currentTime = System.currentTimeMillis()
-            val duration = currentTime - recordingStartTime
-            val seconds = duration / 1000
-            recordingDurationTextView.text = "Recording Duration: $seconds seconds"
-            handler.postDelayed(this, 1000) // Update every second
+            val elapsedMillis = currentTime - recordingStartTime
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(elapsedMillis)
+            val minutes = seconds / 60
+            val remainingSeconds = seconds % 60
+            durationText.text = "Duration: $minutes:${String.format("%02d", remainingSeconds)}"
+            handler.postDelayed(this, 1000)
         }
     }
 
-    private fun checkPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.RECORD_AUDIO
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+//    private fun updateSeekBar() {
+//        handler.postDelayed(object : Runnable {
+//            override fun run() {
+//                audioRecordBinding.seekBar.progress = mediaPlayer!!.currentPosition
+//                updateDurationText(mediaPlayer!!.currentPosition)
+//                if (mediaPlayer!!.isPlaying) {
+//                    handler.postDelayed(this, 1000)
+//                }
+//            }
+//        }, 0)
+//    }
 
-    private fun requestStoragePermission() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.RECORD_AUDIO),
-            STORAGE_PERMISSION_CODE
-        )
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startRecording()
-            } else {
-                // Handle permission denied
-            }
+    private fun updateSeekBar() {
+        if (mediaPlayer != null) { // Check if mediaPlayer is not null
+            handler.postDelayed(object : Runnable {
+                override fun run() {
+                    if (mediaPlayer != null) { // Check mediaPlayer is still not null
+                        audioRecordBinding.seekBar.progress = mediaPlayer!!.currentPosition
+                        updateDurationText(mediaPlayer!!.currentPosition)
+                        if (mediaPlayer!!.isPlaying) {
+                            handler.postDelayed(this, 1000)
+                        }
+                    }
+                }
+            }, 0)
         }
+    }
+
+    private fun updateDurationText(duration: Int) {
+        val minutes = duration / 60000
+        val seconds = (duration % 60000) / 1000
+        audioRecordBinding.durationText!!.text = String.format("%02d:%02d", minutes, seconds)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer!!.release()
     }
 }
