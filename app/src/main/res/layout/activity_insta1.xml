@@ -116,7 +116,28 @@
         </LinearLayout>
 
     </FrameLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/convertToGifButton"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_110sdp"
+        android:layout_marginBottom="57dp"
+        android:backgroundTint="@color/Red"
+        app:cardCornerRadius="@dimen/_35sdp"
+        app:cardElevation="@dimen/_2sdp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="convertToGifButton"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:id="@+id/cdExploreBtnReel1"
         android:layout_width="@dimen/_280sdp"

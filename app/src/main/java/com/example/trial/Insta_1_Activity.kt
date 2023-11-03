@@ -3,12 +3,15 @@ package com.example.trial
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaMetadataRetriever
 import android.net.Uri
@@ -18,8 +21,10 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.MediaController
 import android.widget.TextView
@@ -28,6 +33,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.CallBackOfQuery
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.FFmpegCallBack
 import com.easynewsvideomaker.easynewsvideomaker.merge_file.LogMessage
@@ -35,9 +41,11 @@ import com.example.trial.databinding.ActivityInsta1Binding
 import com.example.trial.databinding.DialogFileSaveBinding
 import com.example.trial.databinding.ProgressBarBinding
 import com.example.trial.merge_file.FFmpegQueryExtension
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.util.Timer
 import java.util.TimerTask
 
@@ -48,6 +56,7 @@ class Insta_1_Activity : AppCompatActivity() {
 //    lateinit var dialogEditBinding: DialogEditBinding
     private var mDefaultColor = 0
     var videoPath = ""
+    var gifPath = ""
     private val PICK_VIDEO_REQUEST = 1
     private var selectedVideoUri: Uri? = null
     lateinit var progressDialog: Dialog
@@ -121,6 +130,7 @@ class Insta_1_Activity : AppCompatActivity() {
                 progressDialog.show()
 
                 addTextOnVideoFun(fileName)
+//                addGifOnVideoFun(fileName)
 //                mixVideo(fileName)
 
                 dialog.dismiss()
@@ -243,6 +253,87 @@ class Insta_1_Activity : AppCompatActivity() {
 //    }
 
 
+
+    // Function to capture the content of a TextView as an image
+    fun captureTextViewAsImage(textView: TextView): Bitmap {
+        textView.isDrawingCacheEnabled = true
+        textView.buildDrawingCache()
+        val bitmap = Bitmap.createBitmap(textView.drawingCache)
+        textView.isDrawingCacheEnabled = false
+        return bitmap
+    }
+
+    // Function to convert a Bitmap to a GIF
+    fun convertBitmapToGIF(bitmap: Bitmap, outputFile: File) {
+        // Use a library like AndroidGifEncoder or AnimatedGifEncoder to convert the bitmap to a GIF
+        // Example:
+        // val gifEncoder = AnimatedGifEncoder()
+        // gifEncoder.start(outputFile.path)
+        // gifEncoder.addFrame(bitmap)
+        // gifEncoder.finish()
+    }
+
+    // Function to convert a GIF file to a base64 string
+    fun convertGifToBase64(gifFile: File): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        gifFile.inputStream().use { input ->
+            val buffer = ByteArray(1024)
+            var bytesRead: Int
+            while (input.read(buffer).also { bytesRead = it } != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead)
+            }
+        }
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+    private fun addGifOnVideoFun(fileName: String) {
+
+        var outputPath =
+            Environment.getExternalStorageDirectory().path + "/Download/$fileName.mp4"
+
+        var InputVideo = videoPath!!
+
+        var gifInputDirectory =gifPath
+
+        var textInput =binding.txtAdditionalTextReel1.text.toString()
+
+        var RepoterOnScreenX = binding.loutbg.left.toFloat()
+        var RepoterOnScreenY = binding.loutbg.top.toFloat()
+
+        val videoWidth = getVideoWidth(InputVideo)
+        val videoHeight = getVideoHeight(InputVideo)
+
+        val query = ffmpegQueryExtension.addGifOnVideoFun(
+            InputVideo,
+            gifInputDirectory!!,
+            outputPath,
+        )
+        CallBackOfQuery().callQuery(query, object : FFmpegCallBack {
+            override fun process(logMessage: LogMessage) {
+
+            }
+
+            override fun success() {
+
+                progressDialog.dismiss()
+                Toast.makeText(this@Insta_1_Activity, "Video Download Success", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun cancel() {
+
+                progressDialog.dismiss()
+                Toast.makeText(this@Insta_1_Activity, "Video Download Cancel", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun failed() {
+
+                progressDialog.dismiss()
+                Toast.makeText(this@Insta_1_Activity, "Video Download Fail", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
     private fun addTextOnVideoFun(fileName: String) {
 

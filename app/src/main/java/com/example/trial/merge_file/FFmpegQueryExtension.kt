@@ -672,7 +672,35 @@ class FFmpegQueryExtension {
 //    }
 
 //this code work only orientation portrait video
-//        fun addTextOnVideo2(
+        fun addTextOnVideo2(
+        inputVideo: String,
+        imageInput: String,
+        textInput: String,
+        videoWidth: Int,
+        videoHeight: Int,
+        output: String
+    ): Array<String> {
+        val inputs: ArrayList<String> = ArrayList()
+
+        var textCenter = "drawtext=fontfile=/system/fonts/DroidSans.ttf:text='text scrolling':fontsize=20:fontcolor=white:x=w-(t-4.5)*100/2:y=h-th-60"
+
+        inputs.apply {
+            add("-i")
+            add(inputVideo)
+            add("-i")
+            add(imageInput)
+            add("-filter_complex")
+            add("[1:v]scale=$videoWidth:$videoHeight[scaled_image];[0:v][scaled_image]overlay=0:0, $textCenter")
+            add("-c:a")
+            add("copy")
+            add("-movflags")
+            add("+faststart")
+            add(output)
+        }
+        return inputs.toArray(arrayOfNulls<String>(inputs.size))
+    }
+
+//    fun addTextOnVideo2(
 //        inputVideo: String,
 //        imageInput: String,
 //        textInput: String,
@@ -682,30 +710,26 @@ class FFmpegQueryExtension {
 //    ): Array<String> {
 //        val inputs: ArrayList<String> = ArrayList()
 //
-//        var textCenter = "drawtext=fontfile=/system/fonts/DroidSans.ttf:text='text scrolling':fontsize=20:fontcolor=white:x=w-(t-4.5)*100/2:y=h-th-60"
+//        var textCenter =
+//            "drawtext=fontfile=/system/fonts/DroidSans.ttf:text='text scrolling':fontsize=20:fontcolor=white:x=w-(t-4.5)*100/2:y=h-th-60"
+//        val filter =
+//            "drawtext=text='Your Text Here':fontfile=/system/fonts/DroidSans.ttf:fontsize=24:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:box=1:boxcolor=black@0.5:boxborderw=5:enable='between(t,0,5)'"
 //
 //        inputs.apply {
 //            add("-i")
 //            add(inputVideo)
-//            add("-i")
-//            add(imageInput)
-//            add("-filter_complex")
-//            add("[1:v]scale=$videoWidth:$videoHeight[scaled_image];[0:v][scaled_image]overlay=0:0, $textCenter")
+//            add("-vf")
+//            add("$filter")
 //            add("-c:a")
 //            add("copy")
-//            add("-movflags")
-//            add("+faststart")
 //            add(output)
 //        }
 //        return inputs.toArray(arrayOfNulls<String>(inputs.size))
 //    }
 
-    fun addTextOnVideo2(
+    fun addGifOnVideoFun(
         inputVideo: String,
-        imageInput: String,
-        textInput: String,
-        videoWidth: Int,
-        videoHeight: Int,
+        gifInput: String,
         output: String
     ): Array<String> {
         val inputs: ArrayList<String> = ArrayList()
@@ -718,8 +742,10 @@ class FFmpegQueryExtension {
         inputs.apply {
             add("-i")
             add(inputVideo)
-            add("-vf")
-            add("$filter")
+            add("-i")
+            add(gifInput)
+            add("-filter_complex")
+            add("overlay=10:10")
             add("-c:a")
             add("copy")
             add(output)
