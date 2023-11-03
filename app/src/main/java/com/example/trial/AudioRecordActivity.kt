@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
@@ -105,6 +106,7 @@ class AudioRecordActivity : AppCompatActivity() {
     }
 
     private fun startPlaying() {
+        audioRecordBinding.seekBar.visibility=View.VISIBLE
         mediaPlayer = MediaPlayer()
         val filePath = "${Environment.getExternalStorageDirectory()}/audio_record.3gp"
 
@@ -124,6 +126,7 @@ class AudioRecordActivity : AppCompatActivity() {
         mediaPlayer?.setOnCompletionListener {
             stopPlaying()
             audioRecordBinding.playButton!!.text = "Play Audio"
+
         }
 
 
