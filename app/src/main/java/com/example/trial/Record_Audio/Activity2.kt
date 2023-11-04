@@ -1,8 +1,7 @@
-package com.example.trial
+package com.example.trial.Record_Audio
 
 import android.media.MediaPlayer
 import android.media.MediaRecorder
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -10,12 +9,14 @@ import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.trial.R
 import com.example.trial.databinding.Activity2Binding
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class Activity2 : AppCompatActivity() {
-    lateinit var recodingBinding:Activity2Binding
+    lateinit var recodingBinding: Activity2Binding
 
     // creating a variable for media recorder object class.
     private var mRecorder: MediaRecorder? = null

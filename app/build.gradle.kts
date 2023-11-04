@@ -65,7 +65,9 @@ dependencies {
 
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.20")
 
-
-
+    //seekbar
+//    implementation ("com.github.guilhe:seekbar-ranged-view:1.0.3")
+//    implementation ("com.github.Mohammed-Alaa:RangeSeekBar:1.0.1")
+    implementation ("com.github.MohammedAlaaMorsi:RangeSeekBar:1.0.6")
 
 }

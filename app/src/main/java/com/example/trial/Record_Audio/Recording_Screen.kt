@@ -1,4 +1,4 @@
-package com.example.trial
+package com.example.trial.Record_Audio
 
 import android.Manifest
 import android.app.Dialog
@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
@@ -16,11 +15,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
+import com.example.trial.R
 import com.example.trial.databinding.ActivityRecordingScreenBinding
 import com.example.trial.databinding.SaveAudioDialogboxBinding
 import java.io.File
 import java.io.IOException
-
 
 private const val LOG_TAG = "AudioRecordTest"
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
@@ -198,7 +197,8 @@ class Recording_Screen : AppCompatActivity(){
 
     private fun onSaveAudio() {
         val dialog = Dialog(this)
-        val dialogBinding : SaveAudioDialogboxBinding = SaveAudioDialogboxBinding.inflate(layoutInflater)
+        val dialogBinding : SaveAudioDialogboxBinding =
+            SaveAudioDialogboxBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
 
         val edtfilename = dialog.findViewById<EditText>(R.id.edtfilename)
@@ -214,7 +214,11 @@ class Recording_Screen : AppCompatActivity(){
                 val outputFile = File(externalCacheDir, outputFileName)
 
                 if (outputFile.exists()) {
-                    Toast.makeText(this, "File with the same name already exists", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "File with the same name already exists",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     try {
                         // Copy the recorded audio file to the new location with the desired name

@@ -1,4 +1,4 @@
-package com.example.trial
+package com.example.trial.Record_Audio
 
 import android.Manifest
 import android.media.MediaPlayer
@@ -8,14 +8,19 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Button
 import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.trial.R
 import com.example.trial.databinding.ActivityAudioRecordBinding
+import com.mohammedalaa.seekbar.DoubleValueSeekBarView
+import com.mohammedalaa.seekbar.OnDoubleValueSeekBarChangeListener
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+
 
 class AudioRecordActivity : AppCompatActivity() {
 
@@ -74,6 +79,61 @@ class AudioRecordActivity : AppCompatActivity() {
 //                playButton.text = "Stop"
             }
         }
+       if ( mediaPlayer!=null) {
+           val audioDuration = mediaPlayer!!.duration
+           audioRecordBinding.doubleRangeSeekbar.maxValue = audioDuration
+           audioRecordBinding.seekBar.max = audioDuration
+       }
+
+//        val audioDuration = mediaPlayer!!.duration
+//        audioRecordBinding.seekBar.max = audioDuration
+
+        audioRecordBinding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    mediaPlayer!!.seekTo(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Pause the audio while dragging the SeekBar
+                if (mediaPlayer!!.isPlaying) {
+                    mediaPlayer!!.pause()
+                }
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // Resume playing when SeekBar is released
+                mediaPlayer!!.start()
+            }
+        })
+
+        audioRecordBinding.doubleRangeSeekbar.setOnRangeSeekBarViewChangeListener(object :
+            OnDoubleValueSeekBarChangeListener {
+            override fun onValueChanged(
+                @Nullable seekBar: DoubleValueSeekBarView?,
+                min: Int,
+                max: Int,
+                fromUser: Boolean
+            ) {
+                audioRecordBinding.minText.text = min.toString()
+                audioRecordBinding.maxText.text = max.toString()
+            }
+
+            override fun onStartTrackingTouch(
+                @Nullable seekBar: DoubleValueSeekBarView?,
+                min: Int,
+                max: Int
+            ) {
+            }
+
+            override fun onStopTrackingTouch(
+                @Nullable seekBar: DoubleValueSeekBarView?,
+                min: Int,
+                max: Int
+            ) {
+            }
+        });
 
     }
 
@@ -106,7 +166,7 @@ class AudioRecordActivity : AppCompatActivity() {
     }
 
     private fun startPlaying() {
-        audioRecordBinding.seekBar.visibility=View.VISIBLE
+        audioRecordBinding.seekBar.visibility = View.VISIBLE
         mediaPlayer = MediaPlayer()
         val filePath = "${Environment.getExternalStorageDirectory()}/audio_record.3gp"
 

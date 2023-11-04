@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".AudioRecordActivity">
+    tools:context=".Record_Audio.AudioRecordActivity">
 
     <Button
         android:id="@+id/recordButton"
@@ -22,21 +22,85 @@
         android:text="Play Audio" />
 
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/playButton"
-            android:visibility="gone"
-            android:layout_marginTop="16dp"/>
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/playButton"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/durationText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/seekBar"
-            android:layout_centerHorizontal="true"
-            android:text="Duration: 0:00"
-            android:layout_marginTop="16dp"/>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/durationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Duration: 0:00" />
+
+<!--    <com.mohammedalaa.seekbar.DoubleValueSeekBarView-->
+<!--        android:id="@+id/double_range_seekbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:r2CurrentMaxValue="140"-->
+<!--        app:r2CurrentMinValue="30"-->
+<!--        app:r2barHeight="15dp"-->
+<!--        app:r2baseColor="@color/navy"-->
+<!--        app:r2circleFillColor="@color/green"-->
+<!--        app:r2circleRadius="15dp"-->
+<!--        app:r2circleTextColor="@color/white"-->
+<!--        app:r2circleTextSize="@dimen/value_bar_circleTextSize"-->
+<!--        app:r2fillColor="@color/red"-->
+<!--        app:r2maxValue="150"-->
+<!--        app:r2maxValueStep="10"-->
+<!--        app:r2minValue="15"-->
+<!--        app:r2minValueStep="5" />-->
+    <SeekBar
+        android:id="@+id/seekBarTrim"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_100sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        />
+
+    <com.mohammedalaa.seekbar.DoubleValueSeekBarView
+        android:id="@+id/double_range_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:r2CurrentMinValue="30"
+        app:r2barHeight="15dp"
+        app:r2baseColor="@color/navy"
+        app:r2circleFillColor="@color/green"
+        app:r2circleRadius="15dp"
+        app:r2circleTextColor="@color/white"
+        app:r2fillColor="@color/red"
+        app:r2maxValueStep="10"
+        app:r2minValue="15"
+        app:r2minValueStep="5" />
+    <TextView
+        android:id="@+id/minText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/double_range_seekbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Min: 0:00" />
+
+    <TextView
+        android:id="@+id/maxText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/minText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Max: 0:00" />
+</RelativeLayout>
 

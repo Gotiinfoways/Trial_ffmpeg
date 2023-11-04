@@ -72,21 +72,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
 
 
-//        // Load the GIF image from resources
-//        val gifResourceId = R.raw.tenor // Replace with the actual resource ID
-//        val gifBitmap = BitmapFactory.decodeResource(resources, gifResourceId)
-//
-////        mainBinding.imgNewsLoge.setImageBitmap(gifBitmap)
-//        // Convert the GIF image to a Base64 string
-//        val base64String = convertBitmapToBase64(gifBitmap)
-//
-//        gifPath=base64String
-//        Log.e("TAG", "ddsddd: $base64String", )
-//        Log.e("TAG", "initView: $gifPath", )
-//
-//        Glide.with(this)
-//            .load(base64String)
-//            .into(mainBinding.imgNewsLoge);
+
 
         mainBinding.linImportVideo.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
