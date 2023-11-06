@@ -11,14 +11,13 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
-import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.trial.R
 import com.example.trial.databinding.ActivityAudioRecordBinding
-import com.mohammedalaa.seekbar.DoubleValueSeekBarView
-import com.mohammedalaa.seekbar.OnDoubleValueSeekBarChangeListener
+import com.github.guilhe.views.SeekBarRangedView
 import java.io.IOException
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
@@ -81,7 +80,7 @@ class AudioRecordActivity : AppCompatActivity() {
         }
        if ( mediaPlayer!=null) {
            val audioDuration = mediaPlayer!!.duration
-           audioRecordBinding.doubleRangeSeekbar.maxValue = audioDuration
+//           audioRecordBinding.doubleRangeSeekbar.maxValue = audioDuration
            audioRecordBinding.seekBar.max = audioDuration
        }
 
@@ -108,32 +107,46 @@ class AudioRecordActivity : AppCompatActivity() {
             }
         })
 
-        audioRecordBinding.doubleRangeSeekbar.setOnRangeSeekBarViewChangeListener(object :
-            OnDoubleValueSeekBarChangeListener {
-            override fun onValueChanged(
-                @Nullable seekBar: DoubleValueSeekBarView?,
-                min: Int,
-                max: Int,
-                fromUser: Boolean
-            ) {
-                audioRecordBinding.minText.text = min.toString()
-                audioRecordBinding.maxText.text = max.toString()
+//        audioRecordBinding.doubleRangeSeekbar.setOnRangeSeekBarViewChangeListener(object :
+//            OnDoubleValueSeekBarChangeListener {
+//            override fun onValueChanged(
+//                @Nullable seekBar: DoubleValueSeekBarView?,
+//                min: Int,
+//                max: Int,
+//                fromUser: Boolean
+//            ) {
+//                audioRecordBinding.minText.text = min.toString()
+//                audioRecordBinding.maxText.text = max.toString()
+//            }
+//
+//            override fun onStartTrackingTouch(
+//                @Nullable seekBar: DoubleValueSeekBarView?,
+//                min: Int,
+//                max: Int
+//            ) {
+//            }
+//
+//            override fun onStopTrackingTouch(
+//                @Nullable seekBar: DoubleValueSeekBarView?,
+//                min: Int,
+//                max: Int
+//            ) {
+//            }
+//        });
+
+//audioRecordBinding.seekBarAudioTrim.setOn
+        audioRecordBinding.seekBarAudioTrim.setOnSeekBarRangedChangeListener(object : SeekBarRangedView.OnSeekBarRangedChangeListener {
+            override fun onChanged(view: SeekBarRangedView?, minValue: Float, maxValue: Float) {
+                exoPlayer?.seekTo(minValue.toLong())
             }
 
-            override fun onStartTrackingTouch(
-                @Nullable seekBar: DoubleValueSeekBarView?,
-                min: Int,
-                max: Int
-            ) {
+            override fun onChanging(view: SeekBarRangedView?, minValue: Float, maxValue: Float) {
+                minSeekValue = minValue
+                maxSeekValue = maxValue
+                actvStartTime?.text = secToTime(minValue.toLong())
+                actvEndTime?.text = secToTime(maxValue.toLong())
             }
-
-            override fun onStopTrackingTouch(
-                @Nullable seekBar: DoubleValueSeekBarView?,
-                min: Int,
-                max: Int
-            ) {
-            }
-        });
+        })
 
     }
 

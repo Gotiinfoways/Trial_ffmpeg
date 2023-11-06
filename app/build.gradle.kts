@@ -68,6 +68,14 @@ dependencies {
     //seekbar
 //    implementation ("com.github.guilhe:seekbar-ranged-view:1.0.3")
 //    implementation ("com.github.Mohammed-Alaa:RangeSeekBar:1.0.1")
-    implementation ("com.github.MohammedAlaaMorsi:RangeSeekBar:1.0.6")
+//    implementation ("com.github.MohammedAlaaMorsi:RangeSeekBar:1.0.6")
 
+//    implementation ("com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0")
+//    implementation ("com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.2.0-SNAPSHOT")
+//    implementation ("com.github.Jay-Goo:RangeSeekBar:3.0.0")
+
+//    implementation ("com.chemicalbird.android:range-seekview:0.0.4")
+
+//    implementation ("com.github.guilhe:seekbar-ranged-view:3.0.0")
+    implementation ("com.github.guilhe:seekbar-ranged-view:2.0.5")
 }

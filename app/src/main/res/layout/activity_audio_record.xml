@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,68 +40,133 @@
         android:layout_marginTop="16dp"
         android:text="Duration: 0:00" />
 
-<!--    <com.mohammedalaa.seekbar.DoubleValueSeekBarView-->
-<!--        android:id="@+id/double_range_seekbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:r2CurrentMaxValue="140"-->
-<!--        app:r2CurrentMinValue="30"-->
-<!--        app:r2barHeight="15dp"-->
-<!--        app:r2baseColor="@color/navy"-->
-<!--        app:r2circleFillColor="@color/green"-->
-<!--        app:r2circleRadius="15dp"-->
-<!--        app:r2circleTextColor="@color/white"-->
-<!--        app:r2circleTextSize="@dimen/value_bar_circleTextSize"-->
-<!--        app:r2fillColor="@color/red"-->
-<!--        app:r2maxValue="150"-->
-<!--        app:r2maxValueStep="10"-->
-<!--        app:r2minValue="15"-->
-<!--        app:r2minValueStep="5" />-->
-    <SeekBar
-        android:id="@+id/seekBarTrim"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_100sdp"
+    <!--    <com.mohammedalaa.seekbar.DoubleValueSeekBarView-->
+    <!--        android:id="@+id/double_range_seekbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:r2CurrentMaxValue="140"-->
+    <!--        app:r2CurrentMinValue="30"-->
+    <!--        app:r2barHeight="15dp"-->
+    <!--        app:r2baseColor="@color/navy"-->
+    <!--        app:r2circleFillColor="@color/green"-->
+    <!--        app:r2circleRadius="15dp"-->
+    <!--        app:r2circleTextColor="@color/white"-->
+    <!--        app:r2circleTextSize="@dimen/value_bar_circleTextSize"-->
+    <!--        app:r2fillColor="@color/red"-->
+    <!--        app:r2maxValue="150"-->
+    <!--        app:r2maxValueStep="10"-->
+    <!--        app:r2minValue="15"-->
+    <!--        app:r2minValueStep="5" />-->
+
+
+    <!--    <com.mohammedalaa.seekbar.DoubleValueSeekBarView-->
+    <!--        android:id="@+id/double_range_seekbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:r2CurrentMinValue="30"-->
+    <!--        app:r2barHeight="15dp"-->
+    <!--        app:r2baseColor="@color/navy"-->
+    <!--        app:r2circleFillColor="@color/green"-->
+    <!--        app:r2circleRadius="15dp"-->
+    <!--        app:r2circleTextColor="@color/white"-->
+    <!--        app:r2fillColor="@color/red"-->
+    <!--        app:r2maxValueStep="10"-->
+    <!--        app:r2minValue="15"-->
+    <!--        app:r2minValueStep="5" />-->
+
+
+    <!--    <com.github.guilhe.views.SeekBarRangedView-->
+    <!--        android:id="@+id/seekBarAudio"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        custom:backgroundColor="#C0C0C0"-->
+    <!--        custom:backgroundHeight="10dp"-->
+    <!--        custom:currentMin="10"-->
+    <!--        custom:progressColor="@color/progress_bar_line"-->
+    <!--        custom:progressHeight="20dp"-->
+    <!--        custom:rounded="true" />-->
+
+
+
+    <com.github.guilhe.views.SeekBarRangedView
+        android:id="@+id/sbrvVideoTrim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
-        />
+        android:layout_marginTop="@dimen/_30sdp"
+        custom:backgroundColor="@color/Red"
+        custom:backgroundHeight="10dp"
+        custom:currentMin="10"
+        custom:progressColor="@color/blue"
+        custom:progressHeight="20dp"
+        custom:rounded="false"/>
 
-    <com.mohammedalaa.seekbar.DoubleValueSeekBarView
-        android:id="@+id/double_range_seekbar"
+
+    <com.github.guilhe.views.SeekBarRangedView
+        android:id="@+id/seekBarAudioTrim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:r2CurrentMinValue="30"
-        app:r2barHeight="15dp"
-        app:r2baseColor="@color/navy"
-        app:r2circleFillColor="@color/green"
-        app:r2circleRadius="15dp"
-        app:r2circleTextColor="@color/white"
-        app:r2fillColor="@color/red"
-        app:r2maxValueStep="10"
-        app:r2minValue="15"
-        app:r2minValueStep="5" />
-    <TextView
-        android:id="@+id/minText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/double_range_seekbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Min: 0:00" />
+        custom:backgroundColor="#C0C0C0"
+        custom:backgroundHeight="10dp"
+        custom:currentMin="0"
+        custom:progressColor="@color/blue"
+        custom:progressHeight="20dp"
+        custom:rounded="true"
+        custom:thumbNormalResource="@drawable/thumb"
+        custom:thumbPressedResource="@drawable/thumb_pressed" />
 
-    <TextView
-        android:id="@+id/maxText"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/minText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Max: 0:00" />
+        android:layout_below="@id/seekBarAudioTrim"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/txtStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00" />
+
+        <TextView
+            android:id="@+id/txtEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="00:00" />
+    </RelativeLayout>
+
+<!--    <com.github.guilhe.views.SeekBarRangedView-->
+<!--        android:id="@+id/activity_main_a_RangeSeekBarView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="40dp"-->
+<!--        android:layout_marginTop="@dimen/_200sdp"-->
+<!--        custom:thumbPressedResource="@drawable/thumb_pressed"-->
+<!--        custom:thumbNormalResource="@drawable/thumb" />-->
+
+
+
+<!--    <com.github.guilhe.views.SeekBarRangedView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="40dp"-->
+<!--        custom:currentMin="0"-->
+<!--        custom:currentMax="100"-->
+<!--        android:layout_marginTop="@dimen/_150sdp"-->
+<!--        custom:backgroundColor="#C0C0C0"-->
+<!--        custom:progressColor="@color/blue"-->
+<!--        custom:backgroundHeight="10dp"-->
+<!--        custom:progressHeight="20dp"-->
+<!--        custom:rounded="true"/>-->
+
+
+
 </RelativeLayout>
 
